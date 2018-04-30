@@ -22,7 +22,7 @@ def spider_taobao(url):
     try:
         title = re.findall('<h3 class="tb-main-title" data-title="(.*?)"', res)
         title = title[0] if title else None
-        line_price = re.findall('<em class="tb-rmb-num">(.*?)</em>', res)[0]
+        price = re.findall('<em class="tb-rmb-num">(.*?)</em>', res)[0]
 
         # 30-42行为抓取淘宝商品真实价格，该数据是动态加载的
         purl = "https://detailskip.taobao.com/service/getData/1/p1/item/detail/sib.htm?itemId={}&modules=price,xmpPromotion".format(goods_id)
