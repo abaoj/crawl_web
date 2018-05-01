@@ -1,6 +1,5 @@
 #coding=utf-8
 import re
-import json
 import urllib.request
 
 def spider_taobao(url):
@@ -23,7 +22,7 @@ def spider_taobao(url):
     try:
         title = re.findall('<h3 class="tb-main-title" data-title="(.*?)"', res)
         title = title[0] if title else None
-        price = re.findall('<em class="tb-rmb-num">(.*?)</em>', res)[0]
+        line_price = re.findall('<em class="tb-rmb-num">(.*?)</em>', res)[0]
 
         # 30-42行为抓取淘宝商品真实价格，该数据是动态加载的
         purl = "https://detailskip.taobao.com/service/getData/1/p1/item/detail/sib.htm?itemId={}&modules=price,xmpPromotion".format(goods_id)
@@ -51,10 +50,10 @@ def spider_taobao(url):
 
         #特点说明
         attributes =re.findall('<ul class="attributes-list">(.+?)</ul>', res, re.S)[0]
-        attributes = re.findall('<li title="(.*?)">(.*?)</li>', attributes, re.S)
+        attributes = re.findall('<li.*?">(.*?)</li>', attributes, re.S)
         attrstr = ""
         for i in range(len(attributes)):
-            attrstr = attrstr + attributes[i][1]+"\n"
+            attrstr = attrstr + attributes[i]+"\n"
 
 
         ####详情图片
